@@ -1,33 +1,55 @@
 from tkinter import*
-win=Tk()
-win.geometry("500x300")
+root=Tk()
+root.geometry("698x520")
+root.minsize(width=698,height=520)
+root.maxsize(width=698,height=520)
+
+# BACKROUND COLOUR
+root.config(bg="#333333")
+
+# CREATING WIDGETS AND ADDING COLORS 
+
+login_label=Label(root,text="LOGIN FORM",font=("Adiro",20),bg="#333333",fg="Silver")
+username_label=Label(text='Username',font=("Adiro",12),bg="#333333",fg="Silver")
+password_label=Label(text='Password',font=("Adiro",12),bg="#333333",fg="Silver")
+or_label=Label(root,text=" OR ",font=("Arial",15),bg="#333333",fg="White")
+
+# ADDING BOX 
+
+username_entry=Entry(root,font=("Adior",10),width=18)
+password_entry=Entry(root,font=("Adior",10),width=18,show="*")
+
+# Placing WIDGETS
+
+username_label.place(x=200,y=100)
+password_label.place(x=200,y=150)
+login_label.pack(side=TOP,pady=15)
+username_entry.place(x=300,y=102)
+password_entry.place(x=300,y=150)
+or_label.place(x=340,y=250)
 
 
-def add():
-    win.destroy()
-    import register
-
-btn=Button(text="Register Now",command=add)
-btn.place(x=210,y=165)
-
-def add():
-    a=e1.get()
-    lbl.config(text=a)
-    e1.delete(0,END)
-    a=e2.get()
-    lbl.config(text=a)
-    e2.delete(0,END)
-name=Label(text='ID')
-name.pack(padx=0,pady=0)
-e1=Entry()
-e1.pack(pady=10)
-name=Label(text='Password')
-name.pack(pady=0) 
-e2=Entry()
-e2.pack(pady=10)
-lbl=Label(text='')
-btn=Button(text="Log-In",command=add)
-btn.pack()
+# ADDING BUTTTONS
+btn=Button(root,text="LOGIN",font=("Bold Italic",14),bg="White",fg=("Blue"),width=11)
+btn.place(x=300,y=200)
+regester_btn=Button(root,text="REGISTER",font=("Bold Italic",14),bg="White",fg=("Blue"),width=11)
+regester_btn.place(x=300,y=290)
 
 
-win.mainloop()
+
+# def add():
+#     root.destroy()
+#     import register
+
+
+# def add():
+#     a=username_entry.get()
+#     Label.config(text=a)
+#     username_entry.delete(0,END)
+#     a=password_entry.get()
+#     Label.config(text=a)
+#     password_entry.delete(0,END)
+
+
+
+root.mainloop()
