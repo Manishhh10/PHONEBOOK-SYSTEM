@@ -29,5 +29,6 @@ lbl=Label(text='')
 btn=Button(text="Log-In",command=add)
 btn.pack()
 
+print("test")
 
 win.mainloop()
