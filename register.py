@@ -32,7 +32,7 @@ btn=Button(text="Save")
 btn.pack()
 
 def add():
-    root.destroy()
+    
     import login
 btn=Button(text="Go To Login Page!",command=add)
 btn.pack(pady=10)

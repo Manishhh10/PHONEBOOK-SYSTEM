@@ -9,10 +9,10 @@ root.config(bg="#333333")
 
 # CREATING WIDGETS AND ADDING COLORS 
 
-login_label=Label(root,text="L O G I N",font=("Arial",22),bg="#333333",fg="Silver")
-username_label=Label(text='Username',font=("Adiro",12),bg="#333333",fg="Silver",pady=10)
-password_label=Label(text='Password',font=("Adiro",12),bg="#333333",fg="Silver",pady=10)
-or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=10)
+login_label=Label(root,text="LOGIN FORM",font=("Adiro",20),bg="#333333",fg="Silver")
+username_label=Label(text='Username',font=("Adiro",12),bg="#333333",fg="Silver")
+password_label=Label(text='Password',font=("Adiro",12),bg="#333333",fg="Silver")
+or_label=Label(root,text=" OR ",font=("Arial",15),bg="#333333",fg="White")
 
 # ADDING BOX 
 
