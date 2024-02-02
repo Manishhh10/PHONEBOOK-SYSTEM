@@ -9,31 +9,33 @@ root.config(bg="#333333")
 
 # CREATING WIDGETS AND ADDING COLORS 
 
-login_label=Label(root,text="LOGIN FORM",font=("Adiro",20),bg="#333333",fg="Silver")
-username_label=Label(text='Username',font=("Adiro",12),bg="#333333",fg="Silver")
-password_label=Label(text='Password',font=("Adiro",12),bg="#333333",fg="Silver")
-or_label=Label(root,text=" OR ",font=("Arial",15),bg="#333333",fg="White")
+login_label=Label(root,text="L O G I N",font=("Arial",22),bg="#333333",fg="Silver")
+username_label=Label(text='Username',font=("Adiro",12),bg="#333333",fg="Silver",pady=10)
+password_label=Label(text='Password',font=("Adiro",12),bg="#333333",fg="Silver",pady=10)
+or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=10)
 
 # ADDING BOX 
 
-username_entry=Entry(root,font=("Adior",10),width=18)
-password_entry=Entry(root,font=("Adior",10),width=18,show="*")
+username_entry=Entry(root,font=("Adior",15))
+username_entry.pack(padx=20,pady=10)
+password_entry=Entry(root,font=("Adior",15))
+password_entry.pack(pady=10)
 
 # Placing WIDGETS
 
-username_label.place(x=200,y=100)
-password_label.place(x=200,y=150)
-login_label.pack(side=TOP,pady=15)
-username_entry.place(x=300,y=102)
-password_entry.place(x=300,y=150)
-or_label.place(x=340,y=250)
+username_label.place(x=310,y=90)
+password_label.place(x=310,y=155)
+login_label.pack(side=TOP,pady=20)
+username_entry.place(x=240,y=125,)
+password_entry.place(x=240,y=195)
+or_label.place(x=335,y=300)
 
 
 # ADDING BUTTTONS
-btn=Button(root,text="LOGIN",font=("Bold Italic",14),bg="White",fg=("Blue"),width=11)
-btn.place(x=300,y=200)
-regester_btn=Button(root,text="REGISTER",font=("Bold Italic",14),bg="White",fg=("Blue"),width=11)
-regester_btn.place(x=300,y=290)
+btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
+btn.place(x=240,y=260)
+regester_btn=Button(root,text="REGISTER",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
+regester_btn.place(x=240,y=340)
 
 
 
