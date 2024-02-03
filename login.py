@@ -19,7 +19,6 @@ or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=1
 # ADDING BOX 
 
 username_entry=Entry(root,font=("Adior",15))
-
 password_entry=Entry(root,font=("Adior",15),show='*')
 
 
