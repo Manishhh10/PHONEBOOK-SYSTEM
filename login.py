@@ -17,7 +17,7 @@ password_label=Label(root,text='Password',font=("Adiro",12),bg="#333333",fg="Whi
 or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=10)
 
 # ADDING BOX 
-
+#fixing error
 username_entry=Entry(root,font=("Adior",15))
 
 
@@ -74,6 +74,6 @@ password_entry=Entry(root,font=("Adior",15),show='*')
 password_entry.place(x=240,y=185,height=40,width=225)
 
 # CREATE A BUTTON TO TOGGLE PASSWORD
-show_button=Button(root,text="Show",width=8,height=2,bg="#333333",command=toggle_password)
+show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=185)
 root.mainloop()

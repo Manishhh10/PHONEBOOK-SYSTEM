@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import ImageTk, Image
 root = Tk()
 root.geometry("698x520")
 root.resizable(0,0)
@@ -35,6 +36,28 @@ and_label.place(x=335,y=370)
 save_btn=Button(root,text="SAVE",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
 save_btn.place(x=242,y=330)
 
+# ADDING ICONS
+original_pil_image = Image.open("ICONS\output-onlinepngtools - Copy.png")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=195,y=115)
+
+original_pil_image = Image.open("ICONS\Password.png")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=195,y=265)
+
+original_pil_image = Image.open("ICONS\Sms-Linear-32px-fotor-202402030259.png")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=195,y=190)
+
 def add():
     root.destroy()
     import login
@@ -59,6 +82,6 @@ password_entry=Entry(root,font=("Adior",15),show="*")
 password_entry.place(x=240,y=260,height=40,width=225)
 
 # CREATE A BUTTON TO TOGGLE PASSWORD
-show_button=Button(root,text="Show",width=8,height=2,bg="#333333",command=toggle_password)
+show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=260)
 root.mainloop()
