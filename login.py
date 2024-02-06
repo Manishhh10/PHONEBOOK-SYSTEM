@@ -66,6 +66,13 @@ passpic_label.place(x=195,y=185)
 #     Label.config(text=a)
 #     password_entry.delete(0,END)
 
-
-
 root.mainloop()
+
+def fibonacci(num):
+    if num==0:
+        return 0
+    if num==1:
+        return 1
+    else:
+        return fibonacci(num-1)+fibonacci(num-2)
+print(fibonacci(6))
