@@ -22,7 +22,6 @@ username_entry=Entry(root,font=("Adior",15))
 
 
 
-
 # Placing WIDGETS
 
 username_label.place(x=250,y=82)
