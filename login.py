@@ -12,8 +12,8 @@ root.config(bg="#333333")
 # CREATING WIDGETS AND ADDING COLORS
 
 login_label=Label(root,text="L O G I N",font=("Arial",22),bg="#333333",fg="White")
-username_label=Label(text='Username',font=("Adiro",12),bg="#333333",fg="White",pady=10)
-password_label=Label(text='Password',font=("Adiro",12),bg="#333333",fg="White",pady=10)
+username_label=Label(root,text='Username',font=("Adiro",12),bg="#333333",fg="White",pady=10)
+password_label=Label(root,text='Password',font=("Adiro",12),bg="#333333",fg="White",pady=10)
 or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=10)
 
 # ADDING BOX 
@@ -36,16 +36,15 @@ or_label.place(x=335,y=315)
 # ADDING BUTTTONS
 btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
 btn.place(x=240,y=270)
-regester_btn=Button(root,text="REGISTER",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
-regester_btn.place(x=240,y=360)
+
 
 # ADDING ICONS
 userpic= PhotoImage(file="ICONS\output-onlinepngtools - Copy.png")
-userpic_label= Label(image=userpic,bg='#333333')
+userpic_label= Label(root,image=userpic,bg='#333333')
 userpic_label.place(x=195,y=115)
 
 passpic= PhotoImage(file="ICONS\Password.png")
-passpic_label= Label(image=passpic,bg='#333333')
+passpic_label= Label(root,image=passpic,bg='#333333')
 passpic_label.place(x=195,y=185)
 
 # img_old=Image.open('D:\\images\\rabbit.jpg')
@@ -53,11 +52,12 @@ passpic_label.place(x=195,y=185)
 # my_img=ImageTk.PhotoImage(img_resized)
 
 
-# def add():
-#     root.destroy()
-#     import register
+def add():
+    root.destroy()
+    import register
 
-
+regester_btn=Button(root,text="REGISTER",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2,command=add)
+regester_btn.place(x=240,y=360)
 # def add():
 #     a=username_entry.get()
 #     Label.config(text=a)
@@ -65,3 +65,4 @@ passpic_label.place(x=195,y=185)
 #     a=password_entry.get()
 #     Label.config(text=a)
 #     password_entry.delete(0,END)
+root.mainloop()
