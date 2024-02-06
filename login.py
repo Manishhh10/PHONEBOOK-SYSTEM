@@ -65,3 +65,6 @@ passpic_label.place(x=195,y=185)
 #     a=password_entry.get()
 #     Label.config(text=a)
 #     password_entry.delete(0,END)
+
+
+root.mainloop()
