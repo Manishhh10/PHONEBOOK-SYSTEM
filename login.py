@@ -44,7 +44,7 @@ userpic= PhotoImage(file="ICONS\output-onlinepngtools - Copy.png")
 userpic_label= Label(image=userpic,bg='#333333')
 userpic_label.place(x=195,y=115)
 
-passpic= PhotoImage(file="ICONS\Sms-Linear-32px-fotor-202402030259.png")
+passpic= PhotoImage(file="ICONS\Lock1-Linear-32px-fotor-20240205173816.png")
 passpic_label= Label(image=passpic,bg='#333333')
 passpic_label.place(x=195,y=185)
 
