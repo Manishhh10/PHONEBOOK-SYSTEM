@@ -20,7 +20,7 @@ or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=1
 
 username_entry=Entry(root,font=("Adior",15))
 
-password_entry=Entry(root,font=("Adior",15),show='*')
+
 
 
 # Placing WIDGETS
@@ -29,7 +29,6 @@ username_label.place(x=250,y=82)
 password_label.place(x=250,y=152)
 login_label.pack(side=TOP,pady=20)
 username_entry.place(x=240,y=115,height=40,width=225)
-password_entry.place(x=240,y=185,height=40,width=225)
 or_label.place(x=335,y=315)
 
 
@@ -58,11 +57,23 @@ def add():
 
 regester_btn=Button(root,text="REGISTER",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2,command=add)
 regester_btn.place(x=240,y=360)
-# def add():
-#     a=username_entry.get()
-#     Label.config(text=a)
-#     username_entry.delete(0,END)
-#     a=password_entry.get()
-#     Label.config(text=a)
-#     password_entry.delete(0,END)
+
+
+# PASSWORD HIDE AND SHOW OPTION
+def toggle_password():
+    current_pass=password_entry.cget("show")
+    if current_pass=="":
+        password_entry.config(show="*")
+        show_button.config(text="Show")
+    else:
+        password_entry.config(show="")
+        show_button.config(text="Hide")
+
+# CREATE A PASSWORD ENTRY
+password_entry=Entry(root,font=("Adior",15),show='*')
+password_entry.place(x=240,y=185,height=40,width=225)
+
+# CREATE A BUTTON TO TOGGLE PASSWORD
+show_button=Button(root,text="Show",width=8,height=2,bg="#333333",command=toggle_password)
+show_button.place(x=465,y=185)
 root.mainloop()
