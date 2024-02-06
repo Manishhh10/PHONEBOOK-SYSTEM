@@ -44,7 +44,7 @@ userpic= PhotoImage(file="ICONS\output-onlinepngtools - Copy.png")
 userpic_label= Label(image=userpic,bg='#333333')
 userpic_label.place(x=195,y=115)
 
-passpic= PhotoImage(file="ICONS\Lock1-Linear-32px-fotor-20240205173816.png")
+passpic= PhotoImage(file="ICONS\Password.png")
 passpic_label= Label(image=passpic,bg='#333333')
 passpic_label.place(x=195,y=185)
 
@@ -65,14 +65,3 @@ passpic_label.place(x=195,y=185)
 #     a=password_entry.get()
 #     Label.config(text=a)
 #     password_entry.delete(0,END)
-
-root.mainloop()
-
-def fibonacci(num):
-    if num==0:
-        return 0
-    if num==1:
-        return 1
-    else:
-        return fibonacci(num-1)+fibonacci(num-2)
-print(fibonacci(6))
