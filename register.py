@@ -9,9 +9,9 @@ root.config(bg="#333333")
 # CREATING WIDGETS AND ADDING COLORS
 
 register_label=Label(root,text="REGISTER",font=("Arial",22),bg="#333333",fg="White")
-email_label=Label(text='EMAIL',font=("Adiro",12),bg="#333333",fg="White",pady=10)
-username_label=Label(text='USERNAME',font=("Adiro",12),bg="#333333",fg="White",pady=12)
-password_label=Label(text='PASSWORD',font=("Adiro",12),bg="#333333",fg="White",pady=1)
+email_label=Label(root,text='EMAIL',font=("Adiro",12),bg="#333333",fg="White",pady=10)
+username_label=Label(root,text='USERNAME',font=("Adiro",12),bg="#333333",fg="White",pady=12)
+password_label=Label(root,text='PASSWORD',font=("Adiro",12),bg="#333333",fg="White",pady=1)
 and_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=10)
 
 # ADDING BOX 
@@ -35,17 +35,15 @@ and_label.place(x=335,y=365)
 # ADDING BUTTTONS
 save_btn=Button(root,text="SAVE",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
 save_btn.place(x=242,y=330)
-back_btn=Button(root,text="GO TO LOGIN PAGE !",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
+
+
+
+
+def add():
+    root.destroy()
+    import login
+
+back_btn=Button(root,text="GO TO LOGIN PAGE !",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2,command=add)
 back_btn.place(x=242,y=398)
-
-
-
-
-
-# def add():
-
-#     import login
-# btn=Button(text="Go To Login Page!",command=add)
-# btn.pack(pady=10)
 
 root.mainloop()
