@@ -77,3 +77,4 @@ password_entry.place(x=240,y=185,height=40,width=225)
 show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=185)
 root.mainloop()
+
