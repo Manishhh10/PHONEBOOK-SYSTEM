@@ -38,11 +38,11 @@ btn.place(x=240,y=270)
 
 
 # ADDING ICONS
-userpic= PhotoImage(file="ICONS\output-onlinepngtools - Copy.png")
+userpic= PhotoImage(file="ICONS/USER.jpg")
 userpic_label= Label(root,image=userpic,bg='#333333')
 userpic_label.place(x=195,y=115)
 
-passpic= PhotoImage(file="ICONS\Password.png")
+passpic= PhotoImage(file="ICONS/Password.png")
 passpic_label= Label(root,image=passpic,bg='#333333')
 passpic_label.place(x=195,y=185)
 
