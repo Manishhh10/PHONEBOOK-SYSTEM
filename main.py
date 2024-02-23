@@ -39,4 +39,33 @@ address_entry.place(x=160,y=395,width=225,height=40)
 phone_entry=Entry(root,font=("Montserrat",13),bg="#333333",fg="White")
 phone_entry.place(x=160,y=455,width=225,height=40)
 
+#### SEARCH BAR #####
+# Creating search entry
+search_entry=Entry(root,font=("Montserrat",13),bg="#333333",fg="White")
+search_entry.place(x=460,y=95,width=225,height=42.5)
+
+# Creating search button
+search_button=Button(root,text="SEARCH",font=("Arial Bold",10),bg="black",fg=("#2148C0"),width=15,height=2)
+search_button.place(x=685,y=95)
+
+# Creating add button
+add_button=Button(root,text="ADD",font=("Arial Bold",10),bg="black",fg=("#2148C0"),width=12,height=2)
+add_button.place(x=415,y=532)
+
+# Creating delete button
+delete_button=Button(root,text="DELETE",font=("Arial Bold",10),bg="black",fg=("#2148C0"),width=12,height=2)
+delete_button.place(x=565,y=532)
+
+# Creating edit button
+edit_button=Button(root,text="EDIT",font=("Arial Bold",10),bg="black",fg=("#2148C0"),width=12,height=2)
+edit_button.place(x=715,y=532)
+
+# Creating save button
+save_button=Button(root,text="EDIT",font=("Arial Bold",10),bg="black",fg=("#2148C0"),width=12,height=2)
+save_button.place(x=160,y=532)
+
+# Creating text area
+textarea_entry=Text(root,font=("Montserrat",13),bg="#333333",fg="White")
+textarea_entry.place(x=415,y=155,width=400,height=340)
+
 root.mainloop()

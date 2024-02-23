@@ -18,7 +18,7 @@ or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=1
 
 # ADDING BOX 
 #fixing error
-username_entry=Entry(root,font=("Adior",15))
+username_entry=Entry(root,font=("Adior",12),bg="#333333",fg="white")
 
 
 
@@ -70,7 +70,7 @@ def toggle_password():
         show_button.config(text="Hide")
 
 # CREATE A PASSWORD ENTRY
-password_entry=Entry(root,font=("Adior",15),show='*')
+password_entry=Entry(root,font=("Adior",12),show='*',bg="#333333",fg="white")
 password_entry.place(x=240,y=185,height=40,width=225)
 
 # CREATE A BUTTON TO TOGGLE PASSWORD
