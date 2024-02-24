@@ -18,7 +18,7 @@ or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=1
 
 # ADDING BOX 
 #fixing error
-username_entry=Entry(root,font=("Adior",12),bg="#333333",fg="white")
+username_entry=Entry(root,font=("Adior",12),bg="White",fg="black")
 
 
 
@@ -38,13 +38,19 @@ btn.place(x=240,y=270)
 
 
 # ADDING ICONS
-userpic= PhotoImage(file="ICONS/USER.jpg")
-userpic_label= Label(root,image=userpic,bg='#333333')
-userpic_label.place(x=195,y=115)
+original_pil_image = Image.open("ICONS/USER.jpg")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=200,y=120)
 
-passpic= PhotoImage(file="ICONS/Password.png")
-passpic_label= Label(root,image=passpic,bg='#333333')
-passpic_label.place(x=195,y=185)
+original_pil_image = Image.open("ICONS/Password.png")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=200,y=190)
 
 # img_old=Image.open('D:\\images\\rabbit.jpg')
 # img_resized=img_old.resize((341,256)) # new width & height
@@ -70,11 +76,10 @@ def toggle_password():
         show_button.config(text="Hide")
 
 # CREATE A PASSWORD ENTRY
-password_entry=Entry(root,font=("Adior",12),show='*',bg="#333333",fg="white")
+password_entry=Entry(root,font=("Adior",12),show='*',bg="White",fg="black")
 password_entry.place(x=240,y=185,height=40,width=225)
 
 # CREATE A BUTTON TO TOGGLE PASSWORD
 show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=185)
 root.mainloop()
-

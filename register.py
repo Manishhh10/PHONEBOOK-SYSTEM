@@ -4,6 +4,62 @@ root = Tk()
 root.geometry("698x520")
 root.resizable(0,0)
 
+from PIL import ImageTk, Image
+
+def alert_msg(msg):
+    message.config(text=f"ALERT: {msg}")
+
+
+def save_data():
+
+    # Get data from entry widgets
+    email = email_entry.get()
+    username = username_entry.get()
+    password = password_entry.get()
+
+    if email=="" and password=="" and username=="":
+        alert_msg("email, username and password is empty.!")
+        message.config(fg="Red")
+    elif email=="" and password=="":
+        alert_msg("email and password is empty.!")
+        message.config(fg="Red")
+    elif email=="" and username=="":
+        alert_msg("email and username is empty.!")
+        message.config(fg="Red")
+    elif password=="" and username=="":
+        alert_msg("username and password is empty.!")
+        message.config(fg="Red")
+    elif email=="":
+        alert_msg("email is empty!")
+        message.config(fg="Red")
+    elif username=="":     
+        alert_msg("username is empty!")
+        message.config(fg="Red")
+    elif password=="":     
+        alert_msg("password is empty!")
+        message.config(fg="Red")
+    else:
+         # Print the data in key-value pair form
+        user_data={"email":email,"username":username,"password":password}
+        print(user_data)
+        email_entry.delete("0",END)
+        username_entry.delete("0",END)
+        password_entry.delete("0",END)
+        alert_msg("Successfully Registered")
+        message.config(fg="green")
+
+
+
+        
+
+   
+    
+# ... (your existing code)
+
+# CREATING A BUTTON FOR ADDING DATA IN DATABASE 
+save_btn = Button(root, text="SAVE", font=("Arial Bold", 10), bg="White", fg=("#2148C0"), width=27, height=2, command=save_data)
+save_btn.place(x=242, y=330)
+
 # BACKROUND COLOUR
 root.config(bg="#333333")
 
@@ -32,9 +88,7 @@ email_entry.place(x=240,y=115,height=40,width=225)
 username_entry.place(x=240,y=187,height=40,width=225)
 and_label.place(x=335,y=370)
 
-# ADDING BUTTTONS
-save_btn=Button(root,text="SAVE",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
-save_btn.place(x=242,y=330)
+
 
 # ADDING USER ICONS
 original_pil_image = Image.open("ICONS/USER.jpg")
@@ -87,5 +141,12 @@ password_entry.place(x=240,y=260,height=40,width=225)
 show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=260)
 
+# CREATING A BUTTON FOR ADDING DATA IN DATABASE 
+save_btn = Button(root, text="SAVE", font=("Arial Bold", 10), bg="White", fg=("#2148C0"), width=27, height=2, command=save_data)
+save_btn.place(x=242, y=330)
+
+# CREATING A ALERT MESSAGE FOR EMPTY 
+message=Label(root,text="",font=("Arial",12),bg="#333333",fg="Red")
+message.place(x=242,y=460)
 
 root.mainloop()
