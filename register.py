@@ -1,56 +1,103 @@
 from tkinter import *
 from PIL import ImageTk, Image
+import sqlite3
 root = Tk()
 root.geometry("698x520")
 root.resizable(0,0)
 
 from PIL import ImageTk, Image
 
-def alert_msg(msg):
-    message.config(text=f"ALERT: {msg}")
+# Create a database and a table#############################################
+conn = sqlite3.connect('user_data.db')
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL,
+        username TEXT NOT NULL,
+        password TEXT NOT NULL
+    )
+''')
+conn.commit()
+conn.close()
 
 
 def save_data():
-
     # Get data from entry widgets
     email = email_entry.get()
     username = username_entry.get()
     password = password_entry.get()
 
-    if email=="" and password=="" and username=="":
+    if email == "" and password == "" and username == "":
         alert_msg("Email, username and password is empty.!")
         message.config(fg="Red")
-    elif email=="" and password=="":
-        alert_msg("Email and password is empty.!")
-        message.config(fg="Red")
-    elif email=="" and username=="":
-        alert_msg("Email and username is empty.!")
-        message.config(fg="Red")
-    elif password=="" and username=="":
-        alert_msg("Username and password is empty.!")
-        message.config(fg="Red")
-    elif email=="":
-        alert_msg("Email is empty!")
-        message.config(fg="Red")
-    elif username=="":     
-        alert_msg("Username is empty!")
-        message.config(fg="Red")
-    elif password=="":     
-        alert_msg("Password is empty!")
-        message.config(fg="Red")
     else:
-         # Print the data in key-value pair form
-        user_data={"email":email,"username":username,"password":password}
-        print(user_data)
-        email_entry.delete("0",END)
-        username_entry.delete("0",END)
-        password_entry.delete("0",END)
+        # Connect to the database
+        conn = sqlite3.connect('user_data.db')
+        cursor = conn.cursor()
+
+        # Insert data into the table
+        cursor.execute("INSERT INTO users (email, username, password) VALUES (?, ?, ?)",
+                       (email, username, password))
+
+        # Commit the changes and close the connection
+        conn.commit()
+        conn.close()
+
+        # Clear entry fields
+        email_entry.delete("0", END)
+        username_entry.delete("0", END)
+        password_entry.delete("0", END)
+
         alert_msg("Successfully Registered!!")
         message.config(fg="green")
 
+# ... (Rest of your code)############################################################
 
 
-        
+
+def alert_msg(msg):
+    message.config(text=f"ALERT: {msg}")
+
+
+# def save_data():
+
+#     # Get data from entry widgets
+#     email = email_entry.get()
+#     username = username_entry.get()
+#     password = password_entry.get()
+
+#     if email=="" and password=="" and username=="":
+#         alert_msg("Email, username and password is empty.!")
+#         message.config(fg="Red")
+#     elif email=="" and password=="":
+#         alert_msg("Email and password is empty.!")
+#         message.config(fg="Red")
+#     elif email=="" and username=="":
+#         alert_msg("Email and username is empty.!")
+#         message.config(fg="Red")
+#     elif password=="" and username=="":
+#         alert_msg("Username and password is empty.!")
+#         message.config(fg="Red")
+#     elif email=="":
+#         alert_msg("Email is empty!")
+#         message.config(fg="Red")
+#     elif username=="":     
+#         alert_msg("Username is empty!")
+#         message.config(fg="Red")
+#     elif password=="":     
+#         alert_msg("Password is empty!")
+#         message.config(fg="Red")
+#     else:
+#          # Print the data in key-value pair form
+#         user_data={"email":email,"username":username,"password":password}
+#         print(user_data)
+#         email_entry.delete("0",END)
+#         username_entry.delete("0",END)
+#         password_entry.delete("0",END)
+#         alert_msg("Successfully Registered!!")
+#         message.config(fg="green")
+
 
 
 # CREATING A BUTTON FOR ADDING DATA IN DATABASE 

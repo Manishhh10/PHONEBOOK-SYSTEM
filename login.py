@@ -1,5 +1,6 @@
 from tkinter import*
 from PIL import Image, ImageTk
+import sqlite3
 root=Tk()
 root.geometry("698x520")
 root.resizable(0,0)
@@ -8,28 +9,58 @@ root.resizable(0,0)
 
 # BACKROUND COLOUR
 root.config(bg="#333333")
-    
+
+def verify_login():
+    entered_username = username_entry.get()
+    entered_password = password_entry.get()
+
+    if entered_username == "" or entered_password == "":
+        alert_msg("Username or password is empty!")
+    else:
+        # Connect to the database
+        conn = sqlite3.connect('user_data.db')
+        cursor = conn.cursor()
+
+        # Fetch user data based on entered username
+        cursor.execute("SELECT username, password FROM users WHERE username=?", (entered_username,))
+        user_data = cursor.fetchone()
+
+        # Close the database connection
+        conn.close()
+
+        if user_data:
+            stored_username, stored_password = user_data
+            if entered_password == stored_password:
+                root.destroy
+                import main
+                # alert_msg("Login successful!")
+                # alert_message.config(fg="green")
+            else:
+                alert_msg("Incorrect password!")
+        else:
+            alert_msg("User not found!")
+
 # CREATING A ALERT MSG FUNCTION
 def alert_msg(msg):
     alert_message.config(text=f"ALERT: {msg}")
     
 
 # CREATING A FUNCTION
-def save_login():
-    username=username_entry.get()
-    password=password_entry.get()
-    if username=="" and password=="":
-        alert_msg("Username and Password is empty!!")
-    elif username=="":
-        alert_msg("Username is empty!!")
-    elif password=="":
-        alert_msg("Password is empty!!")
-    else:
-        user_data={"email":username,"password":password}
-        print(user_data)
-        username_entry.delete("0",END)
-        password_entry.delete("0",END)
-        alert_message.config(text="")
+# def save_login():
+#     username=username_entry.get()
+#     password=password_entry.get()
+#     if username=="" and password=="":
+#         alert_msg("Username and Password is empty!!")
+#     elif username=="":
+#         alert_msg("Username is empty!!")
+#     elif password=="":
+#         alert_msg("Password is empty!!")
+#     else:
+#         user_data={"email":username,"password":password}
+        
+#         username_entry.delete("0",END)
+#         password_entry.delete("0",END)
+#         alert_message.config(text="")
 
 
 # CREATING WIDGETS AND ADDING COLORS
@@ -55,7 +86,7 @@ or_label.place(x=335,y=315)
 
 
 # ADDING BUTTTONS
-btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2,command=save_login)
+btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2,command=verify_login)
 btn.place(x=240,y=270)
 
 
