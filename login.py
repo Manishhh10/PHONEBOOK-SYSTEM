@@ -8,9 +8,31 @@ root.resizable(0,0)
 
 # BACKROUND COLOUR
 root.config(bg="#333333")
+    
+# CREATING A ALERT MSG FUNCTION
+def alert_msg(msg):
+    alert_message.config(text=f"ALERT: {msg}")
+    
+
+# CREATING A FUNCTION
+def save_login():
+    username=username_entry.get()
+    password=password_entry.get()
+    if username=="" and password=="":
+        alert_msg("Username and Password is empty!!")
+    elif username=="":
+        alert_msg("Username is empty!!")
+    elif password=="":
+        alert_msg("Password is empty!!")
+    else:
+        user_data={"email":username,"password":password}
+        print(user_data)
+        username_entry.delete("0",END)
+        password_entry.delete("0",END)
+        alert_message.config(text="")
+
 
 # CREATING WIDGETS AND ADDING COLORS
-
 login_label=Label(root,text="L O G I N",font=("Arial",22),bg="#333333",fg="White")
 username_label=Label(root,text='Username',font=("Adiro",12),bg="#333333",fg="White",pady=10)
 password_label=Label(root,text='Password',font=("Adiro",12),bg="#333333",fg="White",pady=10)
@@ -33,7 +55,7 @@ or_label.place(x=335,y=315)
 
 
 # ADDING BUTTTONS
-btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
+btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2,command=save_login)
 btn.place(x=240,y=270)
 
 
@@ -82,4 +104,10 @@ password_entry.place(x=240,y=185,height=40,width=225)
 # CREATE A BUTTON TO TOGGLE PASSWORD
 show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=185)
+
+# CREATING A BUTTON ALERT BUTTON FOR EMPTY DATA
+alert_message=Label(root,text="",font=("Arial",12),bg="#333333",fg="red")
+alert_message.place(x=240,y=420)
+
+
 root.mainloop()

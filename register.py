@@ -18,25 +18,25 @@ def save_data():
     password = password_entry.get()
 
     if email=="" and password=="" and username=="":
-        alert_msg("email, username and password is empty.!")
+        alert_msg("Email, username and password is empty.!")
         message.config(fg="Red")
     elif email=="" and password=="":
-        alert_msg("email and password is empty.!")
+        alert_msg("Email and password is empty.!")
         message.config(fg="Red")
     elif email=="" and username=="":
-        alert_msg("email and username is empty.!")
+        alert_msg("Email and username is empty.!")
         message.config(fg="Red")
     elif password=="" and username=="":
-        alert_msg("username and password is empty.!")
+        alert_msg("Username and password is empty.!")
         message.config(fg="Red")
     elif email=="":
-        alert_msg("email is empty!")
+        alert_msg("Email is empty!")
         message.config(fg="Red")
     elif username=="":     
-        alert_msg("username is empty!")
+        alert_msg("Username is empty!")
         message.config(fg="Red")
     elif password=="":     
-        alert_msg("password is empty!")
+        alert_msg("Password is empty!")
         message.config(fg="Red")
     else:
          # Print the data in key-value pair form
@@ -45,16 +45,13 @@ def save_data():
         email_entry.delete("0",END)
         username_entry.delete("0",END)
         password_entry.delete("0",END)
-        alert_msg("Successfully Registered")
+        alert_msg("Successfully Registered!!")
         message.config(fg="green")
 
 
 
         
 
-   
-    
-# ... (your existing code)
 
 # CREATING A BUTTON FOR ADDING DATA IN DATABASE 
 save_btn = Button(root, text="SAVE", font=("Arial Bold", 10), bg="White", fg=("#2148C0"), width=27, height=2, command=save_data)
