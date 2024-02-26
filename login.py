@@ -1,5 +1,6 @@
 from tkinter import*
 from PIL import Image, ImageTk
+import sqlite3
 root=Tk()
 root.geometry("698x520")
 root.resizable(0,0)
@@ -9,16 +10,69 @@ root.resizable(0,0)
 # BACKROUND COLOUR
 root.config(bg="#333333")
 
-# CREATING WIDGETS AND ADDING COLORS
+def verify_login():
+    entered_username = username_entry.get()
+    entered_password = password_entry.get()
 
+    if entered_username == "" and entered_password == "":
+        alert_msg("Username and password is empty!")
+    elif entered_username=="":
+        alert_msg("Username is empty!!")
+    elif entered_password=="":
+        alert_msg("Password is empty!!")
+    else:
+        # Connect to the database
+        conn = sqlite3.connect('user_data.db')
+        cursor = conn.cursor()
+
+        # Fetch user data based on entered username
+        cursor.execute("SELECT username, password FROM users WHERE username=?", (entered_username,))
+        user_data = cursor.fetchone()
+
+        # Close the database connection
+        conn.close()
+
+        if user_data:
+            stored_username, stored_password = user_data
+            if entered_password == stored_password:
+                root.destroy
+                import main
+                # alert_msg("Login successful!")
+                # alert_message.config(fg="green")
+            else:
+                alert_msg("Incorrect password!")
+        else:
+            alert_msg("User not found!")
+
+# CREATING A ALERT MSG FUNCTION
+def alert_msg(msg):
+    alert_message.config(text=f"ALERT: {msg}")
+    
+
+# CREATING A FUNCTION
+# def save_login():
+#     username=username_entry.get()
+#     password=password_entry.get()
+#     if username=="" and password=="":
+#         alert_msg("Username and Password is empty!!")
+
+#         user_data={"email":username,"password":password}
+        
+#         username_entry.delete("0",END)
+#         password_entry.delete("0",END)
+#         alert_message.config(text="")
+
+
+# CREATING WIDGETS AND ADDING COLORS
 login_label=Label(root,text="L O G I N",font=("Arial",22),bg="#333333",fg="White")
 username_label=Label(root,text='Username',font=("Adiro",12),bg="#333333",fg="White",pady=10)
 password_label=Label(root,text='Password',font=("Adiro",12),bg="#333333",fg="White",pady=10)
 or_label=Label(root,text=" OR ",font=("Arial",11),bg="#333333",fg="White",pady=10)
 
 # ADDING BOX 
+#fixing error
+username_entry=Entry(root,font=("Adior",12),bg="White",fg="black")
 
-username_entry=Entry(root,font=("Adior",15))
 
 
 
@@ -32,18 +86,24 @@ or_label.place(x=335,y=315)
 
 
 # ADDING BUTTTONS
-btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
+btn=Button(root,text="LOGIN",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2,command=verify_login)
 btn.place(x=240,y=270)
 
 
 # ADDING ICONS
-userpic= PhotoImage(file="ICONS\output-onlinepngtools - Copy.png")
-userpic_label= Label(root,image=userpic,bg='#333333')
-userpic_label.place(x=195,y=115)
+original_pil_image = Image.open("ICONS/USER.jpg")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=200,y=120)
 
-passpic= PhotoImage(file="ICONS\Password.png")
-passpic_label= Label(root,image=passpic,bg='#333333')
-passpic_label.place(x=195,y=185)
+original_pil_image = Image.open("ICONS/Password.png")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=200,y=190)
 
 # img_old=Image.open('D:\\images\\rabbit.jpg')
 # img_resized=img_old.resize((341,256)) # new width & height
@@ -69,10 +129,16 @@ def toggle_password():
         show_button.config(text="Hide")
 
 # CREATE A PASSWORD ENTRY
-password_entry=Entry(root,font=("Adior",15),show='*')
+password_entry=Entry(root,font=("Adior",12),show='*',bg="White",fg="black")
 password_entry.place(x=240,y=185,height=40,width=225)
 
 # CREATE A BUTTON TO TOGGLE PASSWORD
-show_button=Button(root,text="Show",width=8,height=2,bg="#333333",command=toggle_password)
+show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=185)
+
+# CREATING A BUTTON ALERT BUTTON FOR EMPTY DATA
+alert_message=Label(root,text="",font=("Arial",12),bg="#333333",fg="red")
+alert_message.place(x=240,y=420)
+
+
 root.mainloop()

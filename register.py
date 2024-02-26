@@ -1,7 +1,108 @@
 from tkinter import *
+from PIL import ImageTk, Image
+import sqlite3
 root = Tk()
 root.geometry("698x520")
 root.resizable(0,0)
+
+from PIL import ImageTk, Image
+
+# Create a database and a table#############################################
+conn = sqlite3.connect('user_data.db')
+cursor = conn.cursor()
+cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        email TEXT NOT NULL,
+        username TEXT NOT NULL,
+        password TEXT NOT NULL
+    )
+''')
+conn.commit()
+conn.close()
+
+
+def save_data():
+    # Get data from entry widgets
+    email = email_entry.get()
+    username = username_entry.get()
+    password = password_entry.get()
+
+    if email == "" and password == "" and username == "":
+        alert_msg("Email, username and password is empty.!")
+        message.config(fg="Red")
+    else:
+        # Connect to the database
+        conn = sqlite3.connect('user_data.db')
+        cursor = conn.cursor()
+
+        # Insert data into the table
+        cursor.execute("INSERT INTO users (email, username, password) VALUES (?, ?, ?)",
+                       (email, username, password))
+
+        # Commit the changes and close the connection
+        conn.commit()
+        conn.close()
+
+        # Clear entry fields
+        email_entry.delete("0", END)
+        username_entry.delete("0", END)
+        password_entry.delete("0", END)
+
+        alert_msg("Successfully Registered!!")
+        message.config(fg="green")
+
+# ... (Rest of your code)############################################################
+
+
+
+def alert_msg(msg):
+    message.config(text=f"ALERT: {msg}")
+
+
+# def save_data():
+
+#     # Get data from entry widgets
+#     email = email_entry.get()
+#     username = username_entry.get()
+#     password = password_entry.get()
+
+#     if email=="" and password=="" and username=="":
+#         alert_msg("Email, username and password is empty.!")
+#         message.config(fg="Red")
+#     elif email=="" and password=="":
+#         alert_msg("Email and password is empty.!")
+#         message.config(fg="Red")
+#     elif email=="" and username=="":
+#         alert_msg("Email and username is empty.!")
+#         message.config(fg="Red")
+#     elif password=="" and username=="":
+#         alert_msg("Username and password is empty.!")
+#         message.config(fg="Red")
+#     elif email=="":
+#         alert_msg("Email is empty!")
+#         message.config(fg="Red")
+#     elif username=="":     
+#         alert_msg("Username is empty!")
+#         message.config(fg="Red")
+#     elif password=="":     
+#         alert_msg("Password is empty!")
+#         message.config(fg="Red")
+#     else:
+#          # Print the data in key-value pair form
+#         user_data={"email":email,"username":username,"password":password}
+#         print(user_data)
+#         email_entry.delete("0",END)
+#         username_entry.delete("0",END)
+#         password_entry.delete("0",END)
+#         alert_msg("Successfully Registered!!")
+#         message.config(fg="green")
+
+
+
+# CREATING A BUTTON FOR ADDING DATA IN DATABASE 
+save_btn = Button(root, text="SAVE", font=("Arial Bold", 10), bg="White", fg=("#2148C0"), width=27, height=2, command=save_data)
+save_btn.place(x=242, y=330)
 
 # BACKROUND COLOUR
 root.config(bg="#333333")
@@ -19,7 +120,7 @@ and_label=Label(root,text=" AND ",font=("Arial",10),bg="#333333",fg="White",pady
 email_entry=Entry(root,font=("Adior",15))
 email_entry.pack(pady=10)
 username_entry=Entry(root,font=("Adior",15))
-
+username_entry.pack(pady=20)
 
 # PLACING THE WIDGETS
 
@@ -31,9 +132,31 @@ email_entry.place(x=240,y=115,height=40,width=225)
 username_entry.place(x=240,y=187,height=40,width=225)
 and_label.place(x=335,y=370)
 
-# ADDING BUTTTONS
-save_btn=Button(root,text="SAVE",font=("Arial Bold",10),bg="White",fg=("#2148C0"),width=27,height=2)
-save_btn.place(x=242,y=330)
+
+
+# ADDING USER ICONS
+original_pil_image = Image.open("ICONS/USER.jpg")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=195,y=115)
+
+# ADDING PASSWORD ICONS
+original_pil_image = Image.open("ICONS/Password.png")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=195,y=265)
+
+# ADDING MAIL ICONS
+original_pil_image = Image.open("ICONS/SMS.png")
+resized_pil_image = original_pil_image.resize((25, 25))
+resized_image = ImageTk.PhotoImage(resized_pil_image)
+label1 =Label(root,image=resized_image,bg='#333333')
+label1.image = resized_image
+label1.place(x=195,y=190)
 
 def add():
     root.destroy()
@@ -59,6 +182,15 @@ password_entry=Entry(root,font=("Adior",15),show="*")
 password_entry.place(x=240,y=260,height=40,width=225)
 
 # CREATE A BUTTON TO TOGGLE PASSWORD
-show_button=Button(root,text="Show",width=8,height=2,bg="#333333",command=toggle_password)
+show_button=Button(root,text="Show",width=8,height=2,bg="#333333",fg='white',command=toggle_password)
 show_button.place(x=465,y=260)
+
+# CREATING A BUTTON FOR ADDING DATA IN DATABASE 
+save_btn = Button(root, text="SAVE", font=("Arial Bold", 10), bg="White", fg=("#2148C0"), width=27, height=2, command=save_data)
+save_btn.place(x=242, y=330)
+
+# CREATING A ALERT MESSAGE FOR EMPTY 
+message=Label(root,text="",font=("Arial",12),bg="#333333",fg="Red")
+message.place(x=242,y=460)
+
 root.mainloop()
