@@ -14,8 +14,12 @@ def verify_login():
     entered_username = username_entry.get()
     entered_password = password_entry.get()
 
-    if entered_username == "" or entered_password == "":
-        alert_msg("Username or password is empty!")
+    if entered_username == "" and entered_password == "":
+        alert_msg("Username and password is empty!")
+    elif entered_username=="":
+        alert_msg("Username is empty!!")
+    elif entered_password=="":
+        alert_msg("Password is empty!!")
     else:
         # Connect to the database
         conn = sqlite3.connect('user_data.db')
@@ -51,11 +55,7 @@ def alert_msg(msg):
 #     password=password_entry.get()
 #     if username=="" and password=="":
 #         alert_msg("Username and Password is empty!!")
-#     elif username=="":
-#         alert_msg("Username is empty!!")
-#     elif password=="":
-#         alert_msg("Password is empty!!")
-#     else:
+
 #         user_data={"email":username,"password":password}
         
 #         username_entry.delete("0",END)
