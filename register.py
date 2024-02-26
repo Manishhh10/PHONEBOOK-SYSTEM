@@ -24,9 +24,9 @@ conn.close()
 
 def save_data():
     # Get data from entry widgets
-    email = email_entry.get()
-    username = username_entry.get()
-    password = password_entry.get()
+    email = email_entry.get().strip()
+    username = username_entry.get().strip()
+    password = password_entry.get().strip()
 
     if email == "" and password == "" and username == "":
         alert_msg("Email, username and password is empty.!")
