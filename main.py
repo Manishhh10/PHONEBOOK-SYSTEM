@@ -55,7 +55,7 @@ def add_contact_window():
         if first_name=="" or last_name=="" or gender=="" or age=="" or address=="" or phone=="":
             alert_msg("You must fill every field!!")
             message.config(fg="Red")
-        elif not middle_name=="" or first_name=="" or last_name=="" or gender=="" or age=="" or address=="" or phone=="":
+        elif middle_name=="" and (first_name=="" or last_name=="" or gender=="" or age=="" or address=="" or phone==""):
             alert_msg("You must fill every field!!")
             message.config(fg="Red")
         else:
