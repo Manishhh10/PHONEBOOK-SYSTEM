@@ -1,5 +1,5 @@
 from tkinter import *
-from PIL import ImageTk, Image
+from PIL import Image, ImageTk 
 import sqlite3
 root = Tk()
 root.geometry("698x520")
@@ -31,6 +31,24 @@ def save_data():
     if email == "" and password == "" and username == "":
         alert_msg("Email, username and password is empty.!")
         message.config(fg="Red")
+    elif email=="" and password=="":
+        alert_msg("Email and password is empty.!")
+        message.config(fg="Red")
+    elif email=="" and username=="":
+        alert_msg("Email and username is empty.!")
+        message.config(fg="Red")
+    elif password=="" and username=="":
+        alert_msg("Username and password is empty.!")
+        message.config(fg="Red")
+    elif email=="":
+        alert_msg("Email is empty!")
+        message.config(fg="Red")
+    elif username=="":     
+        alert_msg("Username is empty!")
+        message.config(fg="Red")
+    elif password=="":     
+        alert_msg("Password is empty!")
+        message.config(fg="Red")    
     else:
         # Connect to the database
         conn = sqlite3.connect('user_data.db')
@@ -59,44 +77,6 @@ def save_data():
 def alert_msg(msg):
     message.config(text=f"ALERT: {msg}")
 
-
-# def save_data():
-
-#     # Get data from entry widgets
-#     email = email_entry.get()
-#     username = username_entry.get()
-#     password = password_entry.get()
-
-#     if email=="" and password=="" and username=="":
-#         alert_msg("Email, username and password is empty.!")
-#         message.config(fg="Red")
-#     elif email=="" and password=="":
-#         alert_msg("Email and password is empty.!")
-#         message.config(fg="Red")
-#     elif email=="" and username=="":
-#         alert_msg("Email and username is empty.!")
-#         message.config(fg="Red")
-#     elif password=="" and username=="":
-#         alert_msg("Username and password is empty.!")
-#         message.config(fg="Red")
-#     elif email=="":
-#         alert_msg("Email is empty!")
-#         message.config(fg="Red")
-#     elif username=="":     
-#         alert_msg("Username is empty!")
-#         message.config(fg="Red")
-#     elif password=="":     
-#         alert_msg("Password is empty!")
-#         message.config(fg="Red")
-#     else:
-#          # Print the data in key-value pair form
-#         user_data={"email":email,"username":username,"password":password}
-#         print(user_data)
-#         email_entry.delete("0",END)
-#         username_entry.delete("0",END)
-#         password_entry.delete("0",END)
-#         alert_msg("Successfully Registered!!")
-#         message.config(fg="green")
 
 
 
