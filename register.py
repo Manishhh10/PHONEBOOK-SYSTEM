@@ -1,5 +1,5 @@
 from tkinter import *
-from PIL import ImageTk, Image
+from PIL import Image, ImageTk 
 import sqlite3
 root = Tk()
 root.geometry("698x520")
@@ -31,6 +31,24 @@ def save_data():
     if email == "" and password == "" and username == "":
         alert_msg("Email, username and password is empty.!")
         message.config(fg="Red")
+    elif email=="" and password=="":
+        alert_msg("Email and password is empty.!")
+        message.config(fg="Red")
+    elif email=="" and username=="":
+        alert_msg("Email and username is empty.!")
+        message.config(fg="Red")
+    elif password=="" and username=="":
+        alert_msg("Username and password is empty.!")
+        message.config(fg="Red")
+    elif email=="":
+        alert_msg("Email is empty!")
+        message.config(fg="Red")
+    elif username=="":     
+        alert_msg("Username is empty!")
+        message.config(fg="Red")
+    elif password=="":     
+        alert_msg("Password is empty!")
+        message.config(fg="Red")    
     else:
         # Connect to the database
         conn = sqlite3.connect('user_data.db')
