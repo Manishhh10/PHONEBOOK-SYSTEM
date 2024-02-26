@@ -91,5 +91,4 @@ label1 =Label(root,image=resized_image,bg='#333333')
 label1.image = resized_image
 label1.place(x=412,y=95)
 
-
 root.mainloop()
