@@ -203,18 +203,65 @@ def retrieve_data():
 data = retrieve_data()
 # ####################################################################
 
+
+
+from tkinter import messagebox
+
+
+
+def delete_button(contact_id):
+    # Confirm deletion with a messagebox
+    confirmation = messagebox.askyesno("Confirmation", "Are you sure you want to delete this contact?")
+
+    if confirmation:
+        try:
+            conn = sqlite3.connect('contacts.db')
+            cursor = conn.cursor()
+
+            # Delete the selected contact by ID
+            cursor.execute("DELETE FROM contacts WHERE id=?", (contact_id,))
+            conn.commit()
+
+            messagebox.showinfo("Success", "Contact deleted successfully!")
+
+            # Refresh the display after deletion
+            display_users()
+
+        except sqlite3.Error as e:
+            print(f"SQLite error: {e}")
+
+        finally:
+            if conn:
+                conn.close()
+
+
 # FUNCTION FOR DISPLAYING USER DATA
 from tkinter import Button
-
+from tkinter import Scrollbar
 
 def display_users():
     data = retrieve_data()
     print(data)
     frame2 = Frame(root, bg="#333333")
-    frame2.place(x=0, y=155, width=1200, height=520)
+    frame2.place(x=-4, y=155, width=1200, height=520)
 
-    # Clear existing labels and buttons in the frame
-    for widget in frame2.winfo_children():
+    # Create a vertical scrollbar
+    scrollbar = Scrollbar(frame2)
+    scrollbar.pack(side=RIGHT, fill=Y)
+
+    # Create a canvas to hold the frame with a scrollbar
+    canvas = Canvas(frame2, yscrollcommand=scrollbar.set,bg="#333333")
+    canvas.pack(side=LEFT, fill=BOTH, expand=True)
+
+    # Configure the scrollbar to scroll with the canvas
+    scrollbar.config(command=canvas.yview)
+
+    # Set up another frame inside the canvas to hold the actual content
+    inner_frame = Frame(canvas, bg="#333333")
+    canvas.create_window((0, 0), window=inner_frame, anchor="nw")
+
+    # Clear existing labels and buttons in the inner frame
+    for widget in inner_frame.winfo_children():
         widget.destroy()
 
     # Headers for column names
@@ -222,7 +269,8 @@ def display_users():
 
     # Display headers
     header_labels = [
-        Label(frame2, text=header, font=("Montserrat", 12, "bold"), bg="#333333", fg="White", width=5 if header in ["S.N", "Age"] else 12)
+        Label(inner_frame, text=header, font=("Montserrat", 12, "bold"), bg="#333333", fg="White",
+              width=5 if header in ["S.N", "Age"] else 12)
         for header in headers
     ]
 
@@ -232,25 +280,37 @@ def display_users():
 
     # Display user data with styling and action buttons
     for i, user in enumerate(data):
+        contact_id = user.get("id")
         user_labels = [
-            Label(frame2, text=str(i + 1), font=("Montserrat", 12), bg="#333350", fg="White", width=5),
-            Label(frame2, text=user.get("firstname", "").capitalize(), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Label(frame2, text=user.get("middlename", "").capitalize(), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Label(frame2, text=user.get("lastname", "").capitalize(), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Label(frame2, text=user.get("gender", "").capitalize(), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Label(frame2, text=user.get("age", ""), font=("Montserrat", 12), bg="#333350", fg="White", width=5),
-            Label(frame2, text=user.get("address", "").capitalize(), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Label(frame2, text=user.get("phone", ""), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Button(frame2, text="Edit", font=("Arial Bold", 10), bg="green", fg=("White"), width=8, height=1, relief="flat"),
-            Button(frame2, text="Delete", font=("Arial Bold", 10), bg="red", fg=("White"), width=8, height=1, relief="flat")
+            Label(inner_frame, text=str(i + 1), font=("Montserrat", 12), bg="#333350", fg="White", width=5),
+            Label(inner_frame, text=user.get("firstname", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+                  fg="White", width=12),
+            Label(inner_frame, text=user.get("middlename", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+                  fg="White", width=12),
+            Label(inner_frame, text=user.get("lastname", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+                  fg="White", width=12),
+            Label(inner_frame, text=user.get("gender", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+                  fg="White", width=12),
+            Label(inner_frame, text=user.get("age", ""), font=("Montserrat", 12), bg="#333350", fg="White", width=5),
+            Label(inner_frame, text=user.get("address", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+                  fg="White", width=12),
+            Label(inner_frame, text=user.get("phone", ""), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
+            Button(inner_frame, text="Edit", font=("Arial Bold", 10), bg="green", fg=("White"), width=8, height=1,
+                   relief="flat"),
+            Button(inner_frame, text="Delete", font=("Arial Bold", 10), bg="red", fg=("White"), width=8, height=1,
+                   relief="flat",command=lambda id=contact_id:delete_button(id))
         ]
 
         # Place labels and buttons for each user's information
         for j, label in enumerate(user_labels):
             label.grid(row=i + 1, column=j, padx=5, pady=5, sticky="nsew")
 
+    # Configure the canvas to scroll with the scrollbar
+    inner_frame.update_idletasks()
+    canvas.config(scrollregion=canvas.bbox("all"))
 # Call the display_users function to show user data
 display_users()
+
 
 
 
