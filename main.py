@@ -6,6 +6,7 @@ import sqlite3
 ###################################################################################################################
 ###################################################################################################################
 
+    
 def add_contact_window():
 
     add_win=Tk()
@@ -171,30 +172,46 @@ root.configure(bg="#333333")
 root.geometry("1200x800")
 ####################################################################
 
-def retrieve_data():
+def retrieve_data(search_query=None):
     try:
         conn = sqlite3.connect('contacts.db')
         cursor = conn.cursor()
 
-        # Fetch all contacts from the database
-        cursor.execute('SELECT * FROM contacts')
+        # Construct SQL query with optional search criteria for the first name
+        if search_query:
+            cursor.execute('''
+                SELECT * FROM contacts 
+                WHERE lower(first_name) LIKE ?
+            ''', ('%' + search_query.lower() + '%',))
+        else:
+            cursor.execute('SELECT * FROM contacts')
+
         contacts_data = cursor.fetchall()
 
-        # Define the keys for the result dictionary
         keys = ["id", "firstname", "middlename", "lastname", "gender", "age", "address", "phone"]
-
-        # Convert the result into a list of dictionaries
         contacts_list = [dict(zip(keys, contact)) for contact in contacts_data]
 
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
-        contacts_list = []  # Return an empty list in case of an error
+        contacts_list = []
 
     finally:
         if conn:
             conn.close()
 
     return contacts_list
+
+def search_contact_by_name():
+    search_query = search_entry.get().strip()
+    searched_user = retrieve_data(search_query)
+    if searched_user:
+        display_users(searched_user)
+    else:
+        messagebox.showinfo("User Not Found", "The searched user was not found.")
+
+def display_users(contacts):
+    data = retrieve_data(contacts)
+    # Rest of the function remains the same...
 
 
 
@@ -332,7 +349,7 @@ heading_label.pack(side=TOP,pady=10)
 search_entry = Entry(frame1, font=("Montserrat", 13), bg="#333333", fg="White")
 search_entry.place(x=400, y=85, width=225, height=43)
 
-search_button = Button(frame1, text="SEARCH", font=("Arial Bold", 10), bg="black", fg=("White"), width=15, height=2, relief="flat")
+search_button = Button(frame1, text="SEARCH", font=("Arial Bold", 10), bg="black", fg=("White"), width=15, height=2, relief="flat",command=search_contact_by_name)
 search_button.place(x=624, y=85)
 
 # Adding search icon
@@ -343,24 +360,12 @@ search_button.place(x=624, y=85)
 # label1.image = resized_image
 # label1.place(x=280,y=85)
 
-#### SEARCH BAR #####
+def search_contacts():
+    search_query = search_entry.get().strip()
+    display_users(search_query)
 
 
 
-#########################################################################################
-# message=Label(root,text="",font=("Arial",12),bg="#333333",fg="Red")
-# message.place(x=160,y=70)
-
-
-# Your existing Tkinter code here...
-
-
-
-# Close the database connection when the application is closed
-# conn.close()
-
-# def alert_msg(msg):
-#     message.config(text=f"ALERT: {msg}")
 
 
 
