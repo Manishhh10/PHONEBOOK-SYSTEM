@@ -7,19 +7,19 @@ root.resizable(0,0)
 # root.minsize(width=698,height=520)
 # root.maxsize(width=698,height=520)
 
-# BACKROUND COLOUR
+# BACKROUND COLOURS
 root.config(bg="#333333")
 
 def verify_login():
-    entered_username = username_entry.get()
-    entered_password = password_entry.get()
+    entered_username = username_entry.get().strip().lower()
+    entered_password = password_entry.get().strip().lower()
 
     if entered_username == "" and entered_password == "":
-        alert_msg("Username and password is empty!")
-    elif entered_username=="":
-        alert_msg("Username is empty!!")
-    elif entered_password=="":
-        alert_msg("Password is empty!!")
+        alert_msg("Username and password are empty!")
+    elif entered_username == "":
+        alert_msg("Username is empty!")
+    elif entered_password == "":
+        alert_msg("Password is empty!")
     else:
         # Connect to the database
         conn = sqlite3.connect('user_data.db')
@@ -35,32 +35,18 @@ def verify_login():
         if user_data:
             stored_username, stored_password = user_data
             if entered_password == stored_password:
-                root.destroy
+                root.destroy()
                 import main
-                # alert_msg("Login successful!")
-                # alert_message.config(fg="green")
             else:
                 alert_msg("Incorrect password!")
         else:
             alert_msg("User not found!")
 
+
 # CREATING A ALERT MSG FUNCTION
 def alert_msg(msg):
     alert_message.config(text=f"ALERT: {msg}")
     
-
-# CREATING A FUNCTION
-# def save_login():
-#     username=username_entry.get()
-#     password=password_entry.get()
-#     if username=="" and password=="":
-#         alert_msg("Username and Password is empty!!")
-
-#         user_data={"email":username,"password":password}
-        
-#         username_entry.delete("0",END)
-#         password_entry.delete("0",END)
-#         alert_message.config(text="")
 
 
 # CREATING WIDGETS AND ADDING COLORS
@@ -104,10 +90,6 @@ resized_image = ImageTk.PhotoImage(resized_pil_image)
 label1 =Label(root,image=resized_image,bg='#333333')
 label1.image = resized_image
 label1.place(x=200,y=190)
-
-# img_old=Image.open('D:\\images\\rabbit.jpg')
-# img_resized=img_old.resize((341,256)) # new width & height
-# my_img=ImageTk.PhotoImage(img_resized)
 
 
 def add():

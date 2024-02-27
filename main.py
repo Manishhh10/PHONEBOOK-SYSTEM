@@ -237,7 +237,7 @@ def delete_button(contact_id):
                 conn.close()
 
 
-# ... (Your existing code)
+
 
 def edit_data(contact_id):
     # Function to update contact data in the database
@@ -413,23 +413,23 @@ def display_users():
     for i, user in enumerate(data):
         contact_id = user.get("id")
         user_labels = [
-            Label(inner_frame, text=str(i + 1), font=("Montserrat", 12), bg="#333350", fg="White", width=5),
-            Label(inner_frame, text=user.get("firstname", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+            Label(inner_frame, text=str(i + 1), font=("Montserrat", 12), bg="#2B2B2B", fg="White", width=5),
+            Label(inner_frame, text=user.get("firstname", "").capitalize(), font=("Montserrat", 12), bg="#2B2B2B",
                   fg="White", width=12),
-            Label(inner_frame, text=user.get("middlename", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+            Label(inner_frame, text=user.get("middlename", "").capitalize(), font=("Montserrat", 12), bg="#2B2B2B",
                   fg="White", width=12),
-            Label(inner_frame, text=user.get("lastname", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+            Label(inner_frame, text=user.get("lastname", "").capitalize(), font=("Montserrat", 12), bg="#2B2B2B",
                   fg="White", width=12),
-            Label(inner_frame, text=user.get("gender", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+            Label(inner_frame, text=user.get("gender", "").capitalize(), font=("Montserrat", 12), bg="#2B2B2B",
                   fg="White", width=12),
-            Label(inner_frame, text=user.get("age", ""), font=("Montserrat", 12), bg="#333350", fg="White", width=5),
-            Label(inner_frame, text=user.get("address", "").capitalize(), font=("Montserrat", 12), bg="#333350",
+            Label(inner_frame, text=user.get("age", ""), font=("Montserrat", 12), bg="#2B2B2B", fg="White", width=5),
+            Label(inner_frame, text=user.get("address", "").capitalize(), font=("Montserrat", 12), bg="#2B2B2B",
                   fg="White", width=12),
-            Label(inner_frame, text=user.get("phone", ""), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Button(inner_frame, text="Edit", font=("Arial Bold", 10), bg="Green", fg="White", width=8, height=1,
+            Label(inner_frame, text=user.get("phone", ""), font=("Montserrat", 12), bg="#2B2B2B", fg="White", width=12),
+            Button(inner_frame, text="Edit", font=("Arial Bold", 10), bg="#125C13", fg="White", width=8, height=1,
        relief="flat", command=lambda id=contact_id: edit_data(id)),
 
-            Button(inner_frame, text="Delete", font=("Arial Bold", 10), bg="red", fg=("White"), width=8, height=1,
+            Button(inner_frame, text="Delete", font=("Arial Bold", 10), bg="#B31312", fg=("White"), width=8, height=1,
                    relief="flat", command=lambda id=contact_id: delete_button(id))
         ]
 
@@ -500,20 +500,6 @@ def search_user():
             # Configure the canvas to scroll with the scrollbar
             inner_frame.update_idletasks()
             canvas.config(scrollregion=canvas.bbox("all"))
-
-
-
-# ... (Your existing code)
-
-
-
-# ... (Your existing code)
-
-
-
-
-
-
 
 
 
