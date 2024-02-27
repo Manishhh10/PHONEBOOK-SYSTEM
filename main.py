@@ -1,3 +1,4 @@
+from tkinter import messagebox
 from tkinter import *
 from PIL import Image, ImageTk
 import sqlite3
@@ -6,7 +7,6 @@ import sqlite3
 ###################################################################################################################
 ###################################################################################################################
 
-    
 def add_contact_window():
 
     add_win=Tk()
@@ -172,28 +172,24 @@ root.configure(bg="#333333")
 root.geometry("1200x800")
 ####################################################################
 
-def retrieve_data(search_query=None):
+def retrieve_data():
     try:
         conn = sqlite3.connect('contacts.db')
         cursor = conn.cursor()
 
-        # Construct SQL query with optional search criteria for the first name
-        if search_query:
-            cursor.execute('''
-                SELECT * FROM contacts 
-                WHERE lower(first_name) LIKE ?
-            ''', ('%' + search_query.lower() + '%',))
-        else:
-            cursor.execute('SELECT * FROM contacts')
-
+        # Fetch all contacts from the database
+        cursor.execute('SELECT * FROM contacts')
         contacts_data = cursor.fetchall()
 
+        # Define the keys for the result dictionary
         keys = ["id", "firstname", "middlename", "lastname", "gender", "age", "address", "phone"]
+
+        # Convert the result into a list of dictionaries
         contacts_list = [dict(zip(keys, contact)) for contact in contacts_data]
 
     except sqlite3.Error as e:
         print(f"SQLite error: {e}")
-        contacts_list = []
+        contacts_list = []  # Return an empty list in case of an error
 
     finally:
         if conn:
@@ -201,20 +197,10 @@ def retrieve_data(search_query=None):
 
     return contacts_list
 
-def search_contact_by_name():
-    search_query = search_entry.get().strip()
-    searched_user = retrieve_data(search_query)
-    if searched_user:
-        display_users(searched_user)
-    else:
-        messagebox.showinfo("User Not Found", "The searched user was not found.")
-
-def display_users(contacts):
-    data = retrieve_data(contacts)
-    # Rest of the function remains the same...
 
 
 
+#search user function:>
 
 
 data = retrieve_data()
@@ -222,7 +208,6 @@ data = retrieve_data()
 
 
 
-from tkinter import messagebox
 
 
 
@@ -252,11 +237,140 @@ def delete_button(contact_id):
                 conn.close()
 
 
+# ... (Your existing code)
+
+def edit_data(contact_id):
+    # Function to update contact data in the database
+    def update_contact():
+        updated_first_name = updated_firstname_entry.get().strip().lower()
+        updated_middle_name = updated_middlename_entry.get().strip().lower()
+        updated_last_name = updated_lastname_entry.get().strip().lower()
+        updated_gender = updated_gender_entry.get().strip().lower()
+        updated_age = updated_age_entry.get().strip().lower()
+        updated_address = updated_address_entry.get().strip().lower()
+        updated_phone = updated_phone_entry.get().strip().lower()
+
+        # Update data in the database
+        try:
+            conn = sqlite3.connect('contacts.db')
+            cursor = conn.cursor()
+
+            cursor.execute('''
+                UPDATE contacts
+                SET first_name=?, middle_name=?, last_name=?, gender=?, age=?, address=?, phone=?
+                WHERE id=?
+            ''', (updated_first_name, updated_middle_name, updated_last_name,
+                  updated_gender, updated_age, updated_address, updated_phone, contact_id))
+
+            conn.commit()
+            conn.close()
+
+            messagebox.showinfo("Success", "Contact updated successfully!")
+            edit_win.destroy()  # Close the edit window after updating
+
+            # Refresh the display after updating
+            display_users()
+
+        except sqlite3.Error as e:
+            print(f"SQLite error: {e}")
+            messagebox.showerror("Error", "Failed to update contact.")
+
+    # Create a new window for editing
+    edit_win = Tk()
+    edit_win.title("Edit Contact")
+    edit_win.resizable(0,0)
+    edit_win.geometry("420x580")
+    edit_win.configure(bg="#333333")
+
+
+    #### Personal details LABEL #####
+    firstname_label=Label(edit_win,text="FIRST NAME :",font=("Montserrat",11),bg="#333333",fg="White")
+    firstname_label.place(x=40,y=50)
+
+    middlename_label=Label(edit_win,text="MIDDLE NAME :",font=("Montserrat",11),bg="#333333",fg="White")
+    middlename_label.place(x=40,y=120)
+
+    lastname_label=Label(edit_win,text="LAST NAME :",font=("Montserrat",11),bg="#333333",fg="White")
+    lastname_label.place(x=40,y=185)
+
+    gender_label=Label(edit_win,text="GENDER :",font=("Montserrat",11),bg="#333333",fg="White")
+    gender_label.place(x=40,y=260)
+
+    age_label=Label(edit_win,text="AGE :",font=("Montserrat",11),bg="#333333",fg="White")
+    age_label.place(x=40,y=330)
+
+    address_label=Label(edit_win,text="ADDRESS :",font=("Montserrat",11),bg="#333333",fg="White")
+    address_label.place(x=40,y=400)
+
+    phone_label=Label(edit_win,text="PHONE :",font=("Montserrat",11),bg="#333333",fg="White")
+    phone_label.place(x=40,y=470)
+
+    # Fetch contact details based on the contact_id
+    try:
+        conn = sqlite3.connect('contacts.db')
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM contacts WHERE id=?", (contact_id,))
+        contact_data = cursor.fetchone()
+
+    except sqlite3.Error as e:
+        print(f"SQLite error: {e}")
+        messagebox.showerror("Error", "Failed to fetch contact details.")
+
+    finally:
+        if conn:
+            conn.close()
+    # Display fetched data in the entry fields
+    updated_firstname_entry = Entry(edit_win, font=("Montserrat", 13), bg="#333333", fg="White")
+    updated_firstname_entry.insert(0, contact_data[1])  # Assuming the order of columns in the SELECT query
+    updated_firstname_entry.place(x=160,y=40,width=225,height=40)
+
+    updated_middlename_entry = Entry(edit_win, font=("Montserrat", 13), bg="#333333", fg="White")
+    updated_middlename_entry.insert(0, contact_data[2])
+    updated_middlename_entry.place(x=160,y=110,width=225,height=40)
+
+    updated_lastname_entry = Entry(edit_win, font=("Montserrat", 13), bg="#333333", fg="White")
+    updated_lastname_entry.insert(0, contact_data[3])
+    updated_lastname_entry.place(x=160,y=180,width=225,height=40)
+
+    updated_gender_entry = Entry(edit_win, font=("Montserrat", 13), bg="#333333", fg="White")
+    updated_gender_entry.insert(0, contact_data[4])
+    updated_gender_entry.place(x=160,y=250,width=225,height=40)
+
+    updated_age_entry = Entry(edit_win, font=("Montserrat", 13), bg="#333333", fg="White")
+    updated_age_entry.insert(0, contact_data[5])
+    updated_age_entry.place(x=160,y=320,width=225,height=40)
+
+    updated_address_entry = Entry(edit_win, font=("Montserrat", 13), bg="#333333", fg="White")
+    updated_address_entry.insert(0, contact_data[6])
+    updated_address_entry.place(x=160,y=395,width=225,height=40)
+
+    updated_phone_entry = Entry(edit_win, font=("Montserrat", 13), bg="#333333", fg="White")
+    updated_phone_entry.insert(0, contact_data[7])
+    updated_phone_entry.place(x=160,y=465,width=225,height=40)
+
+    save_button = Button(edit_win, text="SAVE", font=("Arial Bold", 10), bg="black", fg="White", width=12, height=2,
+                         relief="flat", command=update_contact)
+    save_button.place(x=230,y=525,width=80,height=40)
+    display_users()
+
+
+################################
+
+
+header_labels = []  # Declare header_labels as a global variable
+inner_frame = None  # Declare inner_frame as a global variable
+canvas = None
 # FUNCTION FOR DISPLAYING USER DATA
 from tkinter import Button
 from tkinter import Scrollbar
 
+
 def display_users():
+    global canvas
+    global header_labels
+    global inner_frame
+    global data  # Add this line to declare data as a global variable
     data = retrieve_data()
     print(data)
     frame2 = Frame(root, bg="#333333")
@@ -267,7 +381,7 @@ def display_users():
     scrollbar.pack(side=RIGHT, fill=Y)
 
     # Create a canvas to hold the frame with a scrollbar
-    canvas = Canvas(frame2, yscrollcommand=scrollbar.set,bg="#333333")
+    canvas = Canvas(frame2, yscrollcommand=scrollbar.set, bg="#333333")
     canvas.pack(side=LEFT, fill=BOTH, expand=True)
 
     # Configure the scrollbar to scroll with the canvas
@@ -312,10 +426,11 @@ def display_users():
             Label(inner_frame, text=user.get("address", "").capitalize(), font=("Montserrat", 12), bg="#333350",
                   fg="White", width=12),
             Label(inner_frame, text=user.get("phone", ""), font=("Montserrat", 12), bg="#333350", fg="White", width=12),
-            Button(inner_frame, text="Edit", font=("Arial Bold", 10), bg="green", fg=("White"), width=8, height=1,
-                   relief="flat"),
+            Button(inner_frame, text="Edit", font=("Arial Bold", 10), bg="Green", fg="White", width=8, height=1,
+       relief="flat", command=lambda id=contact_id: edit_data(id)),
+
             Button(inner_frame, text="Delete", font=("Arial Bold", 10), bg="red", fg=("White"), width=8, height=1,
-                   relief="flat",command=lambda id=contact_id:delete_button(id))
+                   relief="flat", command=lambda id=contact_id: delete_button(id))
         ]
 
         # Place labels and buttons for each user's information
@@ -325,8 +440,75 @@ def display_users():
     # Configure the canvas to scroll with the scrollbar
     inner_frame.update_idletasks()
     canvas.config(scrollregion=canvas.bbox("all"))
+
 # Call the display_users function to show user data
 display_users()
+
+# ... (Your existing code)
+
+
+def search_user():
+    global canvas
+    global inner_frame
+    search_term = search_entry.get().strip().lower()
+
+    if not search_term:
+        # If the search term is empty, display all users
+        display_users()
+    else:
+        # Filter data based on search term
+        filtered_data = [user for user in data if any(search_term in str(value).lower() for value in user.values())]
+
+        # Clear existing labels and buttons in the inner frame
+        for widget in inner_frame.winfo_children():
+            if widget.winfo_exists():  # Check if the widget exists before destroying
+                widget.destroy()
+
+        # Display headers
+        for j, label in enumerate(header_labels):
+            if label.winfo_exists():  # Check if the label exists before placing
+                label.grid(row=0, column=j, padx=5, pady=5, sticky="nsew")
+
+        if not filtered_data:
+            # Display an alert message if no user is found
+            messagebox.showinfo("User Not Found", "No user found with the specified search term.")
+            display_users()
+        else:
+            # Display filtered user data with styling and action buttons
+            for i, user in enumerate(filtered_data):
+                contact_id = user.get("id")
+                user_labels = [
+                Label(inner_frame, text=str(i + 1), font=("Montserrat", 12), bg="#333350", fg="White", width=5),
+                Label(inner_frame, text=user.get("firstname", "").capitalize(), font=("Montserrat", 12), bg="#333350",fg="White", width=12),
+                Label(inner_frame, text=user.get("middlename", "").capitalize(), font=("Montserrat", 12), bg="#333350",fg="White", width=12),
+                Label(inner_frame, text=user.get("lastname", "").capitalize(), font=("Montserrat", 12), bg="#333350",fg="White", width=12),
+                Label(inner_frame, text=user.get("gender", "").capitalize(), font=("Montserrat", 12), bg="#333350",fg="White", width=12),
+                Label(inner_frame, text=user.get("age", ""), font=("Montserrat", 12), bg="#333350",fg="White", width=12),
+                Label(inner_frame, text=user.get("address", "").capitalize(), font=("Montserrat", 12), bg="#333350",fg="White", width=12),
+                Label(inner_frame, text=user.get("phone", "").capitalize(), font=("Montserrat", 12), bg="#333350",fg="White", width=12),
+                # ... (other labels and buttons)
+                Button(inner_frame, text="Edit", font=("Arial Bold", 10), bg="Green", fg="White", width=8, height=1,relief="flat", command=lambda id=contact_id: edit_data(id)),
+                Button(inner_frame, text="Delete", font=("Arial Bold", 10), bg="red", fg=("White"), width=8, height=1, relief="flat", command=lambda id=contact_id: delete_button(id))
+
+            ]
+
+                # Place labels and buttons for each user's information
+                for j, label in enumerate(user_labels):
+                    if label.winfo_exists():  # Check if the label exists before placing
+                        label.grid(row=i + 1, column=j, padx=5, pady=5, sticky="nsew")
+
+            # Configure the canvas to scroll with the scrollbar
+            inner_frame.update_idletasks()
+            canvas.config(scrollregion=canvas.bbox("all"))
+
+
+
+# ... (Your existing code)
+
+
+
+# ... (Your existing code)
+
 
 
 
@@ -349,8 +531,10 @@ heading_label.pack(side=TOP,pady=10)
 search_entry = Entry(frame1, font=("Montserrat", 13), bg="#333333", fg="White")
 search_entry.place(x=400, y=85, width=225, height=43)
 
-search_button = Button(frame1, text="SEARCH", font=("Arial Bold", 10), bg="black", fg=("White"), width=15, height=2, relief="flat",command=search_contact_by_name)
+search_button = Button(frame1, text="SEARCH", font=("Arial Bold", 10), bg="black", fg=("White"), width=15, height=2, relief="flat",command=search_user)
 search_button.place(x=624, y=85)
+
+    
 
 # Adding search icon
 # original_search_image = Image.open("ICONS/SEARCH-removebg-preview-fotor-2024022423158.png")
@@ -359,22 +543,6 @@ search_button.place(x=624, y=85)
 # label1 =Label(root,image=resized_image,bg='#333333')
 # label1.image = resized_image
 # label1.place(x=280,y=85)
-
-def search_contacts():
-    search_query = search_entry.get().strip()
-    display_users(search_query)
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ##### Frame 3 - DELETE, EDIT, ADD buttons #####
