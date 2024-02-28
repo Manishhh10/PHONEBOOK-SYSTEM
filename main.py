@@ -202,7 +202,6 @@ def retrieve_data():
 
 #search user function:>
 
-
 data = retrieve_data()
 # ####################################################################
 
@@ -496,6 +495,7 @@ def search_user():
                 for j, label in enumerate(user_labels):
                     if label.winfo_exists():  # Check if the label exists before placing
                         label.grid(row=i + 1, column=j, padx=5, pady=5, sticky="nsew")
+                        print('The data is being displayed correctly alright.')
 
             # Configure the canvas to scroll with the scrollbar
             inner_frame.update_idletasks()
