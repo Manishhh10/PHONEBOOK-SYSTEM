@@ -57,7 +57,7 @@ def add_contact_window():
 
 
 
-# Event handler for the "SAVE" button
+# Function for adding data "SAVE" button
     def save_contact():
         first_name = firstname_entry.get().strip().lower()
         middle_name = middlename_entry.get().strip().lower()
@@ -68,10 +68,10 @@ def add_contact_window():
         phone = phone_entry.get().strip().lower()
     
         if first_name=="" or last_name=="" or gender=="" or age=="" or address=="" or phone=="":
-            alert_msg("You must fill every field!!")
+            alert_msg("You must fill every field!!(Middle name is optional)")
             message.config(fg="Red")
         elif middle_name=="" and (first_name=="" or last_name=="" or gender=="" or age=="" or address=="" or phone==""):
-            alert_msg("You must fill every field!!")
+            alert_msg("You must fill every field!!(Middle name is optional)")
             message.config(fg="Red")
         else:
             # Insert data into the database
@@ -95,7 +95,7 @@ def add_contact_window():
 
 
     message=Label(add_win,text="",font=("Arial",12),bg="#333333",fg="Red")
-    message.place(x=150,y=60)
+    message.place(x=10,y=60)
 
 
 ##########################################################################
@@ -107,7 +107,7 @@ def add_contact_window():
     heading_label=Label(add_win,text="ADD DETAILS",font=("Castellar",24),bg="#333333",fg="White")
     heading_label.place(x=105,y=15)
 
-#### Personal details #####
+#### Personal details Label #####
     firstname_label=Label(add_win,text="FIRST NAME :",font=("Montserrat",11),bg="#333333",fg="White")
     firstname_label.place(x=40,y=100)
 
@@ -200,7 +200,7 @@ def retrieve_data():
 
 
 
-#search user function:>
+
 
 
 data = retrieve_data()
@@ -547,5 +547,4 @@ add_button.place(x=540, y=20)
 # # Your existing message label
 # message = Label(root, text="", font=("Arial", 12), bg="#333333", fg="Red")
 # message.place(x=160, y=600)
-
 root.mainloop()

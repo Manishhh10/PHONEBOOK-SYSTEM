@@ -5,7 +5,7 @@ root=Tk()
 root.geometry("698x520")
 root.resizable(0,0)
 # root.minsize(width=698,height=520)
-# root.maxsize(width=698,height=520)
+# root.maxsize(width=698,height=520)``
 
 # BACKROUND COLOURS
 root.config(bg="#333333")
