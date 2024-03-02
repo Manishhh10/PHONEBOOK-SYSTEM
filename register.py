@@ -20,8 +20,17 @@ cursor.execute('''
 ''')
 conn.commit()
 conn.close()
+#######################
+# USERNAME ALREADY EXISTS
+def username_exists(username):
+    # Check if the given username already exists in the database
+    conn = sqlite3.connect('user_data.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+    existing_user = cursor.fetchone()
+    conn.close()
 
-
+#######################
 def save_data():
     # Get data from entry widgets
     email = email_entry.get().strip()
@@ -48,7 +57,16 @@ def save_data():
         message.config(fg="Red")
     elif password=="":     
         alert_msg("Password is empty!")
-        message.config(fg="Red")    
+        message.config(fg="Red")
+    elif "@gmail.com" not in email:
+        alert_msg("Not a valid email.")
+        message.config(fg="Red")
+    elif len(password) < 8:
+        alert_msg("Password should be 8 letters or more.")
+        message.config(fg="Red")
+    elif username_exists(username):
+        alert_msg("Username already exists. Please choose another one.")
+        message.config(fg="Red")     
     else:
         # Connect to the database
         conn = sqlite3.connect('user_data.db')
@@ -57,11 +75,9 @@ def save_data():
         # Insert data into the table
         cursor.execute("INSERT INTO users (email, username, password) VALUES (?, ?, ?)",
                        (email, username, password))
-
         # Commit the changes and close the connection
         conn.commit()
         conn.close()
-
         # Clear entry fields
         email_entry.delete("0", END)
         username_entry.delete("0", END)
