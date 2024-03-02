@@ -30,6 +30,8 @@ def username_exists(username):
     existing_user = cursor.fetchone()
     conn.close()
 
+    return existing_user is not None
+
 #######################
 def save_data():
     # Get data from entry widgets
@@ -55,7 +57,7 @@ def save_data():
     elif username=="":     
         alert_msg("Username is empty!")
         message.config(fg="Red")
-    elif password=="":     
+    elif password=="":
         alert_msg("Password is empty!")
         message.config(fg="Red")
     elif "@gmail.com" not in email:
@@ -64,9 +66,10 @@ def save_data():
     elif len(password) < 8:
         alert_msg("Password should be 8 letters or more.")
         message.config(fg="Red")
+
     elif username_exists(username):
         alert_msg("Username already exists. Please choose another one.")
-        message.config(fg="Red")     
+        message.config(fg="Red")
     else:
         # Connect to the database
         conn = sqlite3.connect('user_data.db')
@@ -96,7 +99,7 @@ def alert_msg(msg):
 
 
 
-# CREATING A BUTTON FOR ADDING DATA IN DATABASE 
+# CREATING A BUTTON FOR ADDING DATA IN DATABASE
 save_btn = Button(root, text="SAVE", font=("Arial Bold", 10), bg="White", fg=("#2148C0"), width=27, height=2, command=save_data)
 save_btn.place(x=242, y=330)
 
